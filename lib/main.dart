@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/navigations/StackNavigation.dart';
 
 void main() {
   runApp(PeliculasApp());
@@ -18,6 +19,6 @@ class Cuerpo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(body: Stacknavigation());
   }
 }
