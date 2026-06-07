@@ -29,6 +29,10 @@ class LoginScreen extends StatelessWidget {
             label: Text('Inicia sesión'),
             icon: Icon(Icons.login),
           ),
+          TextButton(
+            onPressed: () => {},
+            child: Text('¿No tienes una cuenta? Registrate aquí'),
+          ),
         ],
       ),
     );
