@@ -44,7 +44,7 @@ class RegistroScreen extends StatelessWidget {
             icon: Icon(Icons.upgrade_sharp),
           ),
           TextButton(
-            onPressed: () => {},
+            onPressed: () => Navigator.pop(context),
             child: Text('¿Ya tienes una cuenta? Inicia sesión ahora'),
           ),
         ],
