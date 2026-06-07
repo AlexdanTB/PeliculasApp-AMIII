@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(PeliculasApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class PeliculasApp extends StatelessWidget {
+  const PeliculasApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
+    return MaterialApp(home: Cuerpo());
+  }
+}
+
+class Cuerpo extends StatelessWidget {
+  const Cuerpo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
   }
 }
