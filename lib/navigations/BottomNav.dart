@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas_app/screens/Catalogo.dart';
-import 'package:peliculas_app/screens/Reproductor.dart';
+import 'package:peliculas_app/screens/catalogo_screen.dart';
+import 'package:peliculas_app/screens/reproductor_screen.dart';
 
 class Bottomnav extends StatefulWidget {
   const Bottomnav({super.key});

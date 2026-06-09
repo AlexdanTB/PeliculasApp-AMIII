@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas_app/screens/Registro.dart';
+import 'package:peliculas_app/screens/registro_sceen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

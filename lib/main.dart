@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas_app/navigations/StackNavigation.dart';
+import 'package:peliculas_app/navigations/stacknavigation.dart';
 
 void main() {
   runApp(PeliculasApp());
