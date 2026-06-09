@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas_app/screens/login_screen.dart';
 
-class RegistroScreen extends StatelessWidget {
+class RegistroScreen extends StatefulWidget {
   const RegistroScreen({super.key});
 
+  @override
+  State<RegistroScreen> createState() => _RegistroScreenState();
+}
+
+class _RegistroScreenState extends State<RegistroScreen> {
+  DateTime? _fecha;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +34,8 @@ class RegistroScreen extends StatelessWidget {
           ),
           Text('Fecha de nacimiento'),
           TextField(
+            readOnly: true,
+            controller: edadContoller,
             decoration: InputDecoration(icon: Icon(Icons.date_range_rounded)),
             keyboardType: TextInputType.datetime,
             onTap: () => _fechanacimiento(context),
@@ -58,13 +66,27 @@ class RegistroScreen extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> _fechanacimiento(BuildContext context) async {
+    DateTime? fechapicked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+
+    if (fechapicked != null && fechapicked != _fecha) {
+      setState(() {
+        _fecha = fechapicked;
+
+        String d = fechapicked.day.toString().padLeft(2, '0');
+        String m = fechapicked.month.toString().padLeft(2, '0');
+        String y = fechapicked.year.toString();
+
+        edadContoller.text = '$d/$m/$y';
+      });
+    }
+  }
 }
 
-Future<void> _fechanacimiento(BuildContext context) async {
-  DateTime? fechapicked = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime.now(),
-  );
-}
+TextEditingController edadContoller = TextEditingController();
