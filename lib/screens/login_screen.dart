@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/navigations/bottomnav.dart';
 import 'package:peliculas_app/screens/registro_sceen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -36,7 +37,7 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             FilledButton.icon(
-              onPressed: () => {},
+              onPressed: () => login(context),
               label: Text('Inicia sesión'),
               icon: Icon(Icons.login),
             ),
@@ -70,4 +71,8 @@ Widget logoiconrow() {
       ),
     ],
   ));
+}
+
+void login(BuildContext context) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Bottomnav()));
 }
