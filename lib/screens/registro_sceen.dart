@@ -27,6 +27,11 @@ class RegistroScreen extends StatelessWidget {
             ),
           ),
           Text('Fecha de nacimiento'),
+          TextField(
+            decoration: InputDecoration(icon: Icon(Icons.date_range_rounded)),
+            keyboardType: TextInputType.datetime,
+            onTap: () => _fechanacimiento(context),
+          ),
           Text('Contraseña'),
           TextField(
             decoration: InputDecoration(
@@ -53,4 +58,13 @@ class RegistroScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _fechanacimiento(BuildContext context) async {
+  DateTime? fechapicked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime.now(),
+  );
 }
