@@ -10,6 +10,7 @@ class LoginScreen extends StatelessWidget {
       body: Column(
         spacing: 10,
         children: [
+          logoiconrow(),
           Text('Iniciar Sesión', style: TextStyle(fontSize: 25)),
           Text('Correo Electrónico'),
           TextField(
@@ -41,4 +42,22 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget logoiconrow() {
+  return (Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    spacing: 10,
+    children: [
+      Image.asset("assets/images/icon.png", height: 60),
+      Text(
+        'Cinext+',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 30,
+          color: Color.fromRGBO(253, 57, 90, 1),
+        ),
+      ),
+    ],
+  ));
 }

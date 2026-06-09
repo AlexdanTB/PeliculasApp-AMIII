@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/screens/login_screen.dart';
 
 class RegistroScreen extends StatelessWidget {
   const RegistroScreen({super.key});
@@ -9,6 +10,7 @@ class RegistroScreen extends StatelessWidget {
       body: Column(
         spacing: 10,
         children: [
+          logoiconrow(),
           Text('Registrate', style: TextStyle(fontSize: 25)),
           Text('Nombre de usuario'),
           TextField(
