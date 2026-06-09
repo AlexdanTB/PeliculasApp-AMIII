@@ -7,38 +7,48 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        spacing: 10,
-        children: [
-          logoiconrow(),
-          Text('Iniciar Sesión', style: TextStyle(fontSize: 25)),
-          Text('Correo Electrónico'),
-          TextField(
-            decoration: InputDecoration(
-              label: Text('Ingresa tu correo electrónico'),
-              border: OutlineInputBorder(),
+      body: Container(
+        padding: EdgeInsets.all(15),
+        margin: EdgeInsets.all(5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 10,
+          children: [
+            logoiconrow(),
+            Text(
+              'Iniciar Sesión',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
-          ),
-          Text('Contraseña'),
-          TextField(
-            decoration: InputDecoration(
-              label: Text('Ingresa tu contraseña'),
-              border: OutlineInputBorder(),
+            Text('Correo Electrónico'),
+            TextField(
+              decoration: InputDecoration(
+                label: Text('Ingresa tu correo electrónico'),
+                border: OutlineInputBorder(),
+                icon: Icon(Icons.mail),
+              ),
             ),
-          ),
-          FilledButton.icon(
-            onPressed: () => {},
-            label: Text('Inicia sesión'),
-            icon: Icon(Icons.login),
-          ),
-          TextButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => RegistroScreen()),
+            Text('Contraseña'),
+            TextField(
+              decoration: InputDecoration(
+                label: Text('Ingresa tu contraseña'),
+                border: OutlineInputBorder(),
+                icon: Icon(Icons.remove_red_eye),
+              ),
             ),
-            child: Text('¿No tienes una cuenta? Registrate aquí'),
-          ),
-        ],
+            FilledButton.icon(
+              onPressed: () => {},
+              label: Text('Inicia sesión'),
+              icon: Icon(Icons.login),
+            ),
+            TextButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RegistroScreen()),
+              ),
+              child: Text('¿No tienes una cuenta? Registrate aquí'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -49,13 +59,13 @@ Widget logoiconrow() {
     mainAxisAlignment: MainAxisAlignment.center,
     spacing: 10,
     children: [
-      Image.asset("assets/images/icon.png", height: 60),
+      Image.asset("assets/images/icon.png", height: 50),
       Text(
         'Cinext+',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 30,
-          color: Color.fromRGBO(253, 57, 90, 1),
+          color: Color.fromRGBO(255, 88, 116, 1),
         ),
       ),
     ],

@@ -13,56 +13,66 @@ class _RegistroScreenState extends State<RegistroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        spacing: 10,
-        children: [
-          logoiconrow(),
-          Text('Registrate', style: TextStyle(fontSize: 25)),
-          Text('Nombre de usuario'),
-          TextField(
-            decoration: InputDecoration(
-              label: Text('Escribe tu nick/usuario'),
-              border: OutlineInputBorder(),
+      body: Container(
+        padding: EdgeInsets.all(20),
+        margin: EdgeInsets.all(5),
+        child: Column(
+          spacing: 10,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            logoiconrow(),
+            Text(
+              'Crea tu cuenta',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
-          ),
-          Text('Correo Electrónico'),
-          TextField(
-            decoration: InputDecoration(
-              label: Text('Ingresa tu correo electrónico'),
-              border: OutlineInputBorder(),
+            Text('Nombre de usuario'),
+            TextField(
+              decoration: InputDecoration(
+                label: Text('Escribe tu nick/usuario'),
+                border: OutlineInputBorder(),
+                icon: Icon(Icons.person_pin),
+              ),
             ),
-          ),
-          Text('Fecha de nacimiento'),
-          TextField(
-            readOnly: true,
-            controller: edadContoller,
-            decoration: InputDecoration(icon: Icon(Icons.date_range_rounded)),
-            keyboardType: TextInputType.datetime,
-            onTap: () => _fechanacimiento(context),
-          ),
-          Text('Contraseña'),
-          TextField(
-            decoration: InputDecoration(
-              label: Text('Ingresa tu contraseña'),
-              border: OutlineInputBorder(),
+            Text('Correo Electrónico'),
+            TextField(
+              decoration: InputDecoration(
+                label: Text('Ingresa tu correo electrónico'),
+                border: OutlineInputBorder(),
+                icon: Icon(Icons.mail),
+              ),
             ),
-          ),
-          TextField(
-            decoration: InputDecoration(
-              label: Text('Confirma tu contraseña'),
-              border: OutlineInputBorder(),
+            Text('Fecha de nacimiento'),
+            TextField(
+              readOnly: true,
+              controller: edadContoller,
+              decoration: InputDecoration(icon: Icon(Icons.date_range_rounded)),
+              keyboardType: TextInputType.datetime,
+              onTap: () => _fechanacimiento(context),
             ),
-          ),
-          FilledButton.icon(
-            onPressed: () => {},
-            label: Text('Registrar'),
-            icon: Icon(Icons.upgrade_sharp),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('¿Ya tienes una cuenta? Inicia sesión ahora'),
-          ),
-        ],
+            Text('Contraseña'),
+            TextField(
+              decoration: InputDecoration(
+                label: Text('Ingresa tu contraseña'),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                label: Text('Confirma tu contraseña'),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            FilledButton.icon(
+              onPressed: () => {},
+              label: Text('Registrarme'),
+              icon: Icon(Icons.app_registration_rounded),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('¿Ya tienes una cuenta? Inicia sesión ahora'),
+            ),
+          ],
+        ),
       ),
     );
   }
