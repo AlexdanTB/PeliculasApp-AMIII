@@ -31,17 +31,30 @@ Widget listaPeliculas(BuildContext context) {
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         final data = snapshot.data!;
-        return ListView.builder(
+        return (GridView.builder(
           itemCount: data.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 10,
+            childAspectRatio: 0.7,
+            crossAxisSpacing: 10,
+          ),
           itemBuilder: (context, index) {
-            final item = data[index];
-            return ListTile(
-              title: Text("${item['titulo']}"),
-              subtitle: Text("${item['director']}"),
-              leading: Image.network(item['imagen']),
+            final pelicula = data[index];
+            return Container(
+              height: 200,
+              padding: EdgeInsets.all(5),
+              margin: EdgeInsetsDirectional.symmetric(vertical: 3),
+              child: Column(
+                spacing: 6,
+                children: [
+                  Image.network('${pelicula['imagen']}', height: 150),
+                  Text('${pelicula['titulo']}'),
+                ],
+              ),
             );
           },
-        );
+        ));
       } else {
         return (CircularProgressIndicator());
       }
