@@ -74,5 +74,8 @@ Widget logoiconrow() {
 }
 
 void login(BuildContext context) {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Bottomnav()));
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => Bottomnav()),
+  );
 }
