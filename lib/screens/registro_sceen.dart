@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas_app/screens/login_screen.dart';
 
 class RegistroScreen extends StatefulWidget {
   const RegistroScreen({super.key});
@@ -20,7 +19,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
           spacing: 10,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            logoiconrow(),
+            Image.asset('assets/images/logoicon0.png', height: 50),
             Text(
               'Crea tu cuenta',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),

@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 10,
           children: [
-            logoiconrow(),
+            Image.asset('assets/images/logoicon0.png', height: 60),
             Text(
               'Iniciar Sesión',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
@@ -53,24 +53,6 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget logoiconrow() {
-  return (Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    spacing: 10,
-    children: [
-      Image.asset("assets/images/icon.png", height: 50),
-      Text(
-        'Cinext+',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 30,
-          color: Color.fromRGBO(255, 88, 116, 1),
-        ),
-      ),
-    ],
-  ));
 }
 
 void login(BuildContext context) {

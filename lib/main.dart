@@ -12,7 +12,9 @@ class PeliculasApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
+      theme: ThemeData.dark().copyWith(
+        colorScheme: ColorScheme.dark(primary: Color.fromRGBO(243, 72, 112, 1)),
+      ),
       home: Cuerpo(),
     );
   }
