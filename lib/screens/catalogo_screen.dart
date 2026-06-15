@@ -12,12 +12,7 @@ class CatalogoScreen extends StatelessWidget {
       appBar: AppBar(
         title: Image.asset('assets/images/logoicon0.png', height: 30),
       ),
-      body: Column(
-        children: [
-          Text('Catálogo de películas'),
-          Expanded(child: listaPeliculas(context)),
-        ],
-      ),
+      body: Column(children: [Expanded(child: listaPeliculas(context))]),
     );
   }
 }
@@ -61,7 +56,7 @@ Widget listaPeliculas(BuildContext context) {
                   spacing: 6,
                   children: [
                     Image.network('${pelicula['imagen']}', height: 150),
-                    Text('${pelicula['titulo']}'),
+                    Flexible(child: Text('${pelicula['titulo']}')),
                   ],
                 ),
               ),
