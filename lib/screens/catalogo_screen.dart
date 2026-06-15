@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/screens/detalle_screen.dart';
 
 class CatalogoScreen extends StatelessWidget {
   const CatalogoScreen({super.key});
@@ -8,12 +9,10 @@ class CatalogoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Text('Catálogo de películas'),
-          Expanded(child: listaPeliculas(context)),
-        ],
+      appBar: AppBar(
+        title: Image.asset('assets/images/logoicon0.png', height: 30),
       ),
+      body: Column(children: [Expanded(child: listaPeliculas(context))]),
     );
   }
 }
@@ -31,17 +30,39 @@ Widget listaPeliculas(BuildContext context) {
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         final data = snapshot.data!;
-        return ListView.builder(
+        return (GridView.builder(
           itemCount: data.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 10,
+            childAspectRatio: 0.7,
+            crossAxisSpacing: 10,
+          ),
           itemBuilder: (context, index) {
-            final item = data[index];
-            return ListTile(
-              title: Text("${item['titulo']}"),
-              subtitle: Text("${item['director']}"),
-              leading: Image.network(item['imagen']),
+            final pelicula = data[index];
+            return GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      DetallePelicula(peliculadetail: pelicula),
+                ),
+              ),
+              child: Container(
+                height: 200,
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsetsDirectional.symmetric(vertical: 3),
+                child: Column(
+                  spacing: 6,
+                  children: [
+                    Image.network('${pelicula['imagen']}', height: 150),
+                    Flexible(child: Text('${pelicula['titulo']}')),
+                  ],
+                ),
+              ),
             );
           },
-        );
+        ));
       } else {
         return (CircularProgressIndicator());
       }
