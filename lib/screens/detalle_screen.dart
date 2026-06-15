@@ -35,7 +35,6 @@ class DetallePelicula extends StatelessWidget {
               style: TextStyle(fontSize: 13, fontWeight: FontWeight(300)),
             ),
             generosL(peliculadetail['genero']),
-            Text('generos'),
           ],
         ),
       ),
@@ -71,12 +70,24 @@ Widget btnVerTrailer() {
 
 Widget generosL(List<dynamic> p) {
   return Container(
-    height: 150,
+    height: 27,
     padding: EdgeInsets.all(2),
-    child: ListView.builder(
+    child: ListView.separated(
+      separatorBuilder: (context, index) => SizedBox(width: 10),
       scrollDirection: Axis.horizontal,
       itemCount: p.length,
-      itemBuilder: (context, index) => Text(p[index].toString().toUpperCase()),
+      itemBuilder: (context, index) => Container(
+        padding: EdgeInsets.symmetric(horizontal: 7),
+        color: Color.fromRGBO(11, 0, 14, 1),
+        child: Text(
+          p[index].toString().toUpperCase(),
+          style: TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight(600),
+            letterSpacing: 0.5,
+          ),
+        ),
+      ),
     ),
   );
 }
