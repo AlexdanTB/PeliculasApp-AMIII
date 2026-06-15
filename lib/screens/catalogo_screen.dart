@@ -44,16 +44,25 @@ Widget listaPeliculas(BuildContext context) {
           ),
           itemBuilder: (context, index) {
             final pelicula = data[index];
-            return Container(
-              height: 200,
-              padding: EdgeInsets.all(5),
-              margin: EdgeInsetsDirectional.symmetric(vertical: 3),
-              child: Column(
-                spacing: 6,
-                children: [
-                  Image.network('${pelicula['imagen']}', height: 150),
-                  Text('${pelicula['titulo']}'),
-                ],
+            return GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      DetallePelicula(peliculadetail: pelicula),
+                ),
+              ),
+              child: Container(
+                height: 200,
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsetsDirectional.symmetric(vertical: 3),
+                child: Column(
+                  spacing: 6,
+                  children: [
+                    Image.network('${pelicula['imagen']}', height: 150),
+                    Text('${pelicula['titulo']}'),
+                  ],
+                ),
               ),
             );
           },
@@ -63,4 +72,19 @@ Widget listaPeliculas(BuildContext context) {
       }
     },
   );
+}
+
+class DetallePelicula extends StatelessWidget {
+  final Map peliculadetail;
+  const DetallePelicula({super.key, required this.peliculadetail});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/logoicon0.png', height: 30),
+      ),
+      body: Text(peliculadetail['titulo']),
+    );
+  }
 }
