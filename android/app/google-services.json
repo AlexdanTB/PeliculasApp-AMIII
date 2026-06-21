@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "846275958727",
+    "project_id": "cinext-amiii",
+    "storage_bucket": "cinext-amiii.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846275958727:android:3686693cd736379a516be2",
+        "android_client_info": {
+          "package_name": "com.example.peliculas_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABBFXlAJIdX-aC6y78gEMM5fAzp5y370M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
