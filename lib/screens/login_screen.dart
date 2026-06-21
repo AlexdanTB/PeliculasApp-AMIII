@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas_app/screens/registro_sceen.dart';
 
@@ -51,7 +52,7 @@ Widget formulario(context) {
         ),
       ),
       FilledButton.icon(
-        onPressed: () => login(context),
+        onPressed: () => login(context, correoC, constrasenaC),
         label: Text('Inicia sesión'),
         icon: Icon(Icons.login),
       ),
@@ -66,6 +67,20 @@ Widget formulario(context) {
   );
 }
 
-void login(BuildContext context) {
-  Navigator.pushNamed(context, "/");
+Future<void> login(context, _correo, _contrasena) async {
+  String correo = _correo.text;
+  String contrasena = _contrasena.text;
+  try {
+    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: correo,
+      password: contrasena,
+    );
+    Navigator.pushNamed(context, "/");
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
+    }
+  }
 }

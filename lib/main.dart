@@ -25,7 +25,7 @@ class PeliculasApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         colorScheme: ColorScheme.dark(primary: Color.fromRGBO(243, 72, 112, 1)),
       ),
-      initialRoute: "login",
+      initialRoute: "/login",
       routes: {
         "/": (context) => CatalogoScreen(),
         "/login": (context) => LoginScreen(),
