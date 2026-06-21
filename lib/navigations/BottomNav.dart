@@ -17,6 +17,7 @@ class _BottomnavState extends State<Bottomnav> {
     return Scaffold(
       body: ventanas[indice],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Color.fromRGBO(243, 72, 112, 1),
         onTap: (value) => setState(() {
           indice = value;
         }),
