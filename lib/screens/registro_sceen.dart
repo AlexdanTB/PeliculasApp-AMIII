@@ -20,59 +20,67 @@ class _RegistroScreenState extends State<RegistroScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/images/logoicon0.png', height: 50),
-            Text(
-              'Crea tu cuenta',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-            Text('Nombre de usuario'),
-            TextField(
-              decoration: InputDecoration(
-                label: Text('Escribe tu nick/usuario'),
-                border: OutlineInputBorder(),
-                icon: Icon(Icons.person_pin),
-              ),
-            ),
-            Text('Correo Electrónico'),
-            TextField(
-              decoration: InputDecoration(
-                label: Text('Ingresa tu correo electrónico'),
-                border: OutlineInputBorder(),
-                icon: Icon(Icons.mail),
-              ),
-            ),
-            Text('Fecha de nacimiento'),
-            TextField(
-              readOnly: true,
-              controller: edadContoller,
-              decoration: InputDecoration(icon: Icon(Icons.date_range_rounded)),
-              keyboardType: TextInputType.datetime,
-              onTap: () => _fechanacimiento(context),
-            ),
-            Text('Contraseña'),
-            TextField(
-              decoration: InputDecoration(
-                label: Text('Ingresa tu contraseña'),
-                border: OutlineInputBorder(),
-              ),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                label: Text('Confirma tu contraseña'),
-                border: OutlineInputBorder(),
-              ),
-            ),
-            FilledButton.icon(
-              onPressed: () => {},
-              label: Text('Registrarme'),
-              icon: Icon(Icons.app_registration_rounded),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('¿Ya tienes una cuenta? Inicia sesión ahora'),
-            ),
+            formulario(context),
           ],
         ),
       ),
+    );
+  }
+
+  Widget formulario(context) {
+    return Column(
+      children: [
+        Text(
+          'Crea tu cuenta',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+        ),
+        Text('Nombre de usuario'),
+        TextField(
+          decoration: InputDecoration(
+            label: Text('Escribe tu nick/usuario'),
+            border: OutlineInputBorder(),
+            icon: Icon(Icons.person_pin),
+          ),
+        ),
+        Text('Correo Electrónico'),
+        TextField(
+          decoration: InputDecoration(
+            label: Text('Ingresa tu correo electrónico'),
+            border: OutlineInputBorder(),
+            icon: Icon(Icons.mail),
+          ),
+        ),
+        Text('Fecha de nacimiento'),
+        TextField(
+          readOnly: true,
+          controller: edadContoller,
+          decoration: InputDecoration(icon: Icon(Icons.date_range_rounded)),
+          keyboardType: TextInputType.datetime,
+          onTap: () => _fechanacimiento(context),
+        ),
+        Text('Contraseña'),
+        TextField(
+          decoration: InputDecoration(
+            label: Text('Ingresa tu contraseña'),
+            border: OutlineInputBorder(),
+          ),
+        ),
+        TextField(
+          decoration: InputDecoration(
+            label: Text('Confirma tu contraseña'),
+            border: OutlineInputBorder(),
+          ),
+        ),
+        FilledButton.icon(
+          onPressed: () => registrar(context),
+          label: Text('Registrarme'),
+          icon: Icon(Icons.app_registration_rounded),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text('¿Ya tienes una cuenta? Inicia sesión ahora'),
+        ),
+      ],
     );
   }
 
@@ -98,4 +106,12 @@ class _RegistroScreenState extends State<RegistroScreen> {
   }
 }
 
+TextEditingController usuarioC = TextEditingController();
+TextEditingController correoC = TextEditingController();
+TextEditingController passC = TextEditingController();
+TextEditingController passconfC = TextEditingController();
 TextEditingController edadContoller = TextEditingController();
+
+void registrar(context) {
+  Navigator.pop(context);
+}
