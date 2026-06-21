@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:peliculas_app/navigations/stacknavigation.dart';
 
 class BienvenidaScreen extends StatefulWidget {
   const BienvenidaScreen({super.key});
@@ -15,10 +14,7 @@ class _BienvenidaScreenState extends State<BienvenidaScreen> {
     // TODO: implement initState
     super.initState();
     Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Stacknavigation()),
-      );
+      Navigator.pushNamed(context, "login");
     });
   }
 
