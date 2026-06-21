@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegistroScreen extends StatefulWidget {
@@ -44,6 +45,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
         ),
         Text('Correo Electrónico'),
         TextField(
+          controller: correoC,
           decoration: InputDecoration(
             label: Text('Ingresa tu correo electrónico'),
             border: OutlineInputBorder(),
@@ -60,12 +62,14 @@ class _RegistroScreenState extends State<RegistroScreen> {
         ),
         Text('Contraseña'),
         TextField(
+          controller: passC,
           decoration: InputDecoration(
             label: Text('Ingresa tu contraseña'),
             border: OutlineInputBorder(),
           ),
         ),
         TextField(
+          controller: passconfC,
           decoration: InputDecoration(
             label: Text('Confirma tu contraseña'),
             border: OutlineInputBorder(),
@@ -112,6 +116,31 @@ TextEditingController passC = TextEditingController();
 TextEditingController passconfC = TextEditingController();
 TextEditingController edadContoller = TextEditingController();
 
-void registrar(context) {
-  Navigator.pop(context);
+Future<void> registrar(context) async {
+  String correo = correoC.text;
+  String contrasena = passC.text;
+  String contrasenac = passconfC.text;
+  if (contrasena == contrasenac) {
+    try {
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: correo, password: contrasena);
+      final registroExitoso = SnackBar(
+        content: Text('¡Registro Exitoso! Inicia sesión ahora'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(registroExitoso);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  } else {
+    final noCoincideSB = SnackBar(content: Text('La contraseña no coicide'));
+    ScaffoldMessenger.of(context).showSnackBar(noCoincideSB);
+  }
+
+  //Navigator.pop(context);
 }
