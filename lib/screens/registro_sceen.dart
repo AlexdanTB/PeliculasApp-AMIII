@@ -37,6 +37,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
         ),
         Text('Nombre de usuario'),
         TextField(
+          controller: usuarioC,
           decoration: InputDecoration(
             label: Text('Escribe tu nick/usuario'),
             border: OutlineInputBorder(),
@@ -117,30 +118,44 @@ TextEditingController passconfC = TextEditingController();
 TextEditingController edadContoller = TextEditingController();
 
 Future<void> registrar(context) async {
+  String usuario = usuarioC.text;
   String correo = correoC.text;
   String contrasena = passC.text;
   String contrasenac = passconfC.text;
-  if (contrasena == contrasenac) {
-    try {
-      final credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: correo, password: contrasena);
-      final registroExitoso = SnackBar(
-        content: Text('¡Registro Exitoso! Inicia sesión ahora'),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(registroExitoso);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+
+  if (usuario.isNotEmpty &&
+      correo.isNotEmpty &&
+      edadContoller.text.isNotEmpty &&
+      contrasena.isNotEmpty) {
+    if (contrasena == contrasenac) {
+      try {
+        final credential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: correo,
+              password: contrasena,
+            );
+        final registroExitoso = SnackBar(
+          content: Text('¡Registro Exitoso! Inicia sesión ahora'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(registroExitoso);
+        Navigator.pop(context);
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+        }
+      } catch (e) {
+        print(e);
       }
-    } catch (e) {
-      print(e);
+    } else {
+      final noCoincideSB = SnackBar(content: Text('La contraseña no coincide'));
+      ScaffoldMessenger.of(context).showSnackBar(noCoincideSB);
     }
   } else {
-    final noCoincideSB = SnackBar(content: Text('La contraseña no coicide'));
-    ScaffoldMessenger.of(context).showSnackBar(noCoincideSB);
+    final datosIncompletos = SnackBar(
+      content: Text('Datos incompletos, llena todos los campos'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(datosIncompletos);
   }
-
-  //Navigator.pop(context);
 }
