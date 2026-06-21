@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas_app/screens/bienvenida_screen.dart';
+import 'package:peliculas_app/screens/catalogo_screen.dart';
+import 'package:peliculas_app/screens/login_screen.dart';
+import 'package:peliculas_app/screens/registro_sceen.dart';
+import 'package:peliculas_app/screens/reproductor_screen.dart';
 
 //FIREBASE
 import 'package:firebase_core/firebase_core.dart';
@@ -21,16 +25,14 @@ class PeliculasApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         colorScheme: ColorScheme.dark(primary: Color.fromRGBO(243, 72, 112, 1)),
       ),
-      home: Cuerpo(),
+      initialRoute: "login",
+      routes: {
+        "/": (context) => CatalogoScreen(),
+        "login": (context) => LoginScreen(),
+        "registro": (context) => RegistroScreen(),
+        "bienvenida": (context) => BienvenidaScreen(),
+        "reproductor": (context) => ReproductorScreen(),
+      },
     );
-  }
-}
-
-class Cuerpo extends StatelessWidget {
-  const Cuerpo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: BienvenidaScreen());
   }
 }
