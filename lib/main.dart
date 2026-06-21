@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas_app/screens/bienvenida_screen.dart';
 
-void main() {
-  runApp(PeliculasApp());
+//FIREBASE
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(const PeliculasApp());
 }
 
 class PeliculasApp extends StatelessWidget {
