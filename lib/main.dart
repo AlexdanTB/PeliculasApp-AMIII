@@ -28,10 +28,10 @@ class PeliculasApp extends StatelessWidget {
       initialRoute: "login",
       routes: {
         "/": (context) => CatalogoScreen(),
-        "login": (context) => LoginScreen(),
-        "registro": (context) => RegistroScreen(),
-        "bienvenida": (context) => BienvenidaScreen(),
-        "reproductor": (context) => ReproductorScreen(),
+        "/login": (context) => LoginScreen(),
+        "/registro": (context) => RegistroScreen(),
+        "/bienvenida": (context) => BienvenidaScreen(),
+        "/reproductor": (context) => ReproductorScreen(),
       },
     );
   }
