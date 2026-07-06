@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/navigations/bottomnav.dart';
 import 'package:peliculas_app/screens/bienvenida_screen.dart';
 import 'package:peliculas_app/screens/catalogo_screen.dart';
 import 'package:peliculas_app/screens/login_screen.dart';
@@ -27,11 +28,10 @@ class PeliculasApp extends StatelessWidget {
       ),
       initialRoute: "/login",
       routes: {
-        "/": (context) => CatalogoScreen(),
         "/login": (context) => LoginScreen(),
         "/registro": (context) => RegistroScreen(),
         "/bienvenida": (context) => BienvenidaScreen(),
-        "/reproductor": (context) => ReproductorScreen(),
+        "/": (context) => Bottomnav(),
       },
     );
   }

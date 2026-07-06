@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/navigations/bottomnav.dart';
 import 'package:peliculas_app/screens/registro_sceen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -75,7 +76,7 @@ Future<void> login(context, _correo, _contrasena) async {
       email: correo,
       password: contrasena,
     );
-    Navigator.pushNamed(context, "/");
+    Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       print('No user found for that email.');

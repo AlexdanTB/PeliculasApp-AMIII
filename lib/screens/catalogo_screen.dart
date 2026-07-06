@@ -9,9 +9,6 @@ class CatalogoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset('assets/images/logoicon0.png', height: 30),
-      ),
       body: Column(children: [Expanded(child: listaPeliculas(context))]),
     );
   }
