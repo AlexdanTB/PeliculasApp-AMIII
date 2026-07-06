@@ -15,6 +15,9 @@ class _BottomnavState extends State<Bottomnav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/logoicon0.png', height: 30),
+      ),
       body: ventanas[indice],
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Color.fromRGBO(243, 72, 112, 1),
