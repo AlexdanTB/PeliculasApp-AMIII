@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class RegistroScreen extends StatefulWidget {
@@ -134,6 +135,9 @@ Future<void> registrar(context) async {
               email: correo,
               password: contrasena,
             );
+
+        guardarDatosUser(usuario, correo, edadContoller.text);
+
         final registroExitoso = SnackBar(
           content: Text('¡Registro Exitoso! Inicia sesión ahora'),
         );
@@ -157,5 +161,19 @@ Future<void> registrar(context) async {
       content: Text('Datos incompletos, llena todos los campos'),
     );
     ScaffoldMessenger.of(context).showSnackBar(datosIncompletos);
+  }
+}
+
+Future<void> guardarDatosUser(usuario, correo, fechan) async {
+  User? user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    String uid = user.uid;
+    DatabaseReference ref = FirebaseDatabase.instance.ref("usuarios/$uid");
+
+    await ref.set({
+      "nick": usuario,
+      "correo": correo,
+      "fecha_nacimiento": fechan,
+    });
   }
 }
