@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/screens/reproductor_screen.dart';
 
 class DetallePelicula extends StatelessWidget {
   final Map peliculadetail;
@@ -19,7 +20,10 @@ class DetallePelicula extends StatelessWidget {
               padding: EdgeInsets.all(5),
               child: Row(
                 spacing: 5,
-                children: [btnMirarAhora(), btnVerTrailer()],
+                children: [
+                  btnMirarAhora(),
+                  btnVerTrailer(context, peliculadetail['trailer_url']),
+                ],
               ),
             ),
             Text(
@@ -55,7 +59,7 @@ Widget btnMirarAhora() {
   );
 }
 
-Widget btnVerTrailer() {
+Widget btnVerTrailer(context, String trailer) {
   return ElevatedButton.icon(
     style: ElevatedButton.styleFrom(
       shape: RoundedRectangleBorder(
@@ -63,7 +67,12 @@ Widget btnVerTrailer() {
       ),
     ),
     icon: Icon(Icons.play_circle_fill),
-    onPressed: () => {},
+    onPressed: () => Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ReproductorScreen(url_video: trailer),
+      ),
+    ),
     label: Text('Ver Trailer'),
   );
 }
