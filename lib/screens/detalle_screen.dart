@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/screens/reproductor_screen.dart';
 import 'package:peliculas_app/widgets/reproductor_yt.dart';
 
 class DetallePelicula extends StatefulWidget {
@@ -35,7 +36,10 @@ class _DetallePeliculaState extends State<DetallePelicula> {
               padding: EdgeInsets.all(5),
               child: Row(
                 spacing: 5,
-                children: [btnMirarAhora(), btnVerTrailer(verTrailer)],
+                children: [
+                  btnMirarAhora(context, widget.peliculadetail['video_url']),
+                  btnVerTrailer(verTrailer),
+                ],
               ),
             ),
             Text(
@@ -58,14 +62,19 @@ class _DetallePeliculaState extends State<DetallePelicula> {
   }
 }
 
-Widget btnMirarAhora() {
+Widget btnMirarAhora(context, video) {
   return FilledButton.icon(
     style: FilledButton.styleFrom(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusGeometry.circular(4.0),
       ),
     ),
-    onPressed: () => (),
+    onPressed: () => Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ReproductorScreen(url_video: video),
+      ),
+    ),
     icon: Icon(Icons.play_arrow, size: 30),
     label: Text('MIRAR AHORA', style: TextStyle(letterSpacing: 1)),
   );
