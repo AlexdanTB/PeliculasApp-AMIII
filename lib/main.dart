@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas_app/navigations/bottomnav.dart';
 import 'package:peliculas_app/screens/bienvenida_screen.dart';
-import 'package:peliculas_app/screens/catalogo_screen.dart';
 import 'package:peliculas_app/screens/login_screen.dart';
 import 'package:peliculas_app/screens/registro_sceen.dart';
-import 'package:peliculas_app/screens/reproductor_screen.dart';
 
 //FIREBASE
 import 'package:firebase_core/firebase_core.dart';
