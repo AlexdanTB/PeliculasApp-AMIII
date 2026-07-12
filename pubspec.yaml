@@ -12,6 +12,7 @@ dependencies:
   firebase_database: ^12.4.4
   flutter:
     sdk: flutter
+  video_player: ^2.11.1
   youtube_player_flutter: ^10.0.1
 
 dev_dependencies:
