@@ -32,4 +32,10 @@ class _ReproductorYtState extends State<ReproductorYt> {
   Widget build(BuildContext context) {
     return YoutubePlayer(controller: _controller);
   }
+
+  @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
+  }
 }
