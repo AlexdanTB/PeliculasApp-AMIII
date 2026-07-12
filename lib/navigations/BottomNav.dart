@@ -11,7 +11,7 @@ class Bottomnav extends StatefulWidget {
 
 class _BottomnavState extends State<Bottomnav> {
   int indice = 0;
-  List<Widget> ventanas = [CatalogoScreen(), ReproductorScreen()];
+  List<Widget> ventanas = [CatalogoScreen(), ReproductorScreen(url_video: '')];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

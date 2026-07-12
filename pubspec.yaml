@@ -7,11 +7,14 @@ environment:
   sdk: ^3.11.5
 
 dependencies:
+  chewie: ^1.14.1
   firebase_auth: ^6.5.3
   firebase_core: ^4.11.0
   firebase_database: ^12.4.4
   flutter:
     sdk: flutter
+  video_player: ^2.11.1
+  youtube_player_flutter: ^10.0.1
 
 dev_dependencies:
   flutter_test:

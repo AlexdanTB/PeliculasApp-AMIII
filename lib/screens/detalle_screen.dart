@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/screens/reproductor_screen.dart';
+import 'package:peliculas_app/widgets/reproductor_yt.dart';
 
-class DetallePelicula extends StatelessWidget {
+class DetallePelicula extends StatefulWidget {
   final Map peliculadetail;
   const DetallePelicula({super.key, required this.peliculadetail});
+
+  @override
+  State<DetallePelicula> createState() => _DetallePeliculaState();
+}
+
+class _DetallePeliculaState extends State<DetallePelicula> {
+  bool verT = false;
+
+  void verTrailer() {
+    setState(() {
+      verT = !verT;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,16 +29,21 @@ class DetallePelicula extends StatelessWidget {
         padding: EdgeInsets.all(5),
         child: Column(
           children: [
-            Image.network(peliculadetail['imagen']),
+            verT
+                ? ReproductorYt(widget.peliculadetail['trailer_url'])
+                : Image.network(widget.peliculadetail['imagen']),
             Container(
               padding: EdgeInsets.all(5),
               child: Row(
                 spacing: 5,
-                children: [btnMirarAhora(), btnVerTrailer()],
+                children: [
+                  btnMirarAhora(context, widget.peliculadetail['video_url']),
+                  btnVerTrailer(verTrailer),
+                ],
               ),
             ),
             Text(
-              peliculadetail['titulo'],
+              widget.peliculadetail['titulo'],
               style: TextStyle(
                 fontWeight: FontWeight(800),
                 fontSize: 25,
@@ -31,10 +51,10 @@ class DetallePelicula extends StatelessWidget {
               ),
             ),
             Text(
-              peliculadetail['descripcion'],
+              widget.peliculadetail['descripcion'],
               style: TextStyle(fontSize: 13, fontWeight: FontWeight(300)),
             ),
-            generosL(peliculadetail['genero']),
+            generosL(widget.peliculadetail['genero']),
           ],
         ),
       ),
@@ -42,20 +62,25 @@ class DetallePelicula extends StatelessWidget {
   }
 }
 
-Widget btnMirarAhora() {
+Widget btnMirarAhora(context, video) {
   return FilledButton.icon(
     style: FilledButton.styleFrom(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusGeometry.circular(4.0),
       ),
     ),
-    onPressed: () => {},
+    onPressed: () => Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ReproductorScreen(url_video: video),
+      ),
+    ),
     icon: Icon(Icons.play_arrow, size: 30),
     label: Text('MIRAR AHORA', style: TextStyle(letterSpacing: 1)),
   );
 }
 
-Widget btnVerTrailer() {
+Widget btnVerTrailer(Function verTrailer) {
   return ElevatedButton.icon(
     style: ElevatedButton.styleFrom(
       shape: RoundedRectangleBorder(
@@ -63,7 +88,7 @@ Widget btnVerTrailer() {
       ),
     ),
     icon: Icon(Icons.play_circle_fill),
-    onPressed: () => {},
+    onPressed: () => verTrailer(),
     label: Text('Ver Trailer'),
   );
 }
