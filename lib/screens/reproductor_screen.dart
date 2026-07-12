@@ -17,12 +17,14 @@ class _ReproductorScreenState extends State<ReproductorScreen> {
   @override
   void initState() {
     super.initState();
+    print('URL Video: ${widget.url_video}');
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.url_video))
       ..initialize().then((_) {
         _chewieController = ChewieController(
           videoPlayerController: _controller,
           autoPlay: true,
           looping: false,
+          fullScreenByDefault: true,
           aspectRatio: _controller.value.aspectRatio,
           errorBuilder: (context, errorMessage) => Text(errorMessage),
         );
