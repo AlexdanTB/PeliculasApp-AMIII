@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/models/usuario.dart';
 
 class PerfilScreen extends StatefulWidget {
   const PerfilScreen({super.key});
@@ -10,6 +11,8 @@ class PerfilScreen extends StatefulWidget {
 }
 
 class _PerfilScreenState extends State<PerfilScreen> {
+  late Map dataUsuario;
+
   @override
   void initState() {
     leerDatosUser();
@@ -27,6 +30,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
             backgroundColor: Color.fromRGBO(50, 50, 50, 1),
           ),
           Text('data'),
+          formulario(),
         ],
       ),
     );
@@ -40,7 +44,17 @@ Future<void> leerDatosUser() async {
   final snapshot = await ref.child('usuarios/$userId').get();
   if (snapshot.exists) {
     print(snapshot.value);
+    final map = snapshot.value as Map;
+
+    Usuario usuario = Usuario.fromMap(snapshot.key!, map);
+    print('Usuario mapeado: ${usuario}');
   } else {
     print('No data available. ${userId}');
   }
+}
+
+Widget formulario() {
+  return (Container(
+    child: Column(children: [TextField(), TextField(), TextField()]),
+  ));
 }
