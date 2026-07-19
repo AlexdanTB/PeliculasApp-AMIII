@@ -21,6 +21,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
   bool isLoading = false;
   bool isEditing = false;
   User? user = FirebaseAuth.instance.currentUser;
+  String? urlFoto;
   XFile? foto;
 
   @override
@@ -46,6 +47,9 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
   Future<void> _leerDatosUser() async {
     setState(() => isLoading = true);
+    urlFoto = user!.photoURL;
+    print('photoURL: $urlFoto');
+    print('foto(Xfile): $foto');
     String userId = user!.uid;
     final ref = FirebaseDatabase.instance.ref();
     final snapshot = await ref.child('usuarios/$userId').get();
@@ -68,6 +72,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
   void actualizarDatos() {
     String userId = user!.uid;
+    actualizarFotoFire(userId);
     FirebaseDatabase.instance
         .ref('usuarios/$userId/')
         .set({
@@ -107,12 +112,14 @@ class _PerfilScreenState extends State<PerfilScreen> {
     actualizarFoto(picker);
   }
 
-  Future<void> actualizarFotoFire() async {
+  Future<void> actualizarFotoFire(String uid) async {
     final storageRef = FirebaseStorage.instance.ref();
-    final fotoPerfilRef = storageRef.child("${user!.displayName}/avatar.jpg");
+    final fotoPerfilRef = storageRef.child("avatars/${uid}.jpg");
 
     try {
       await fotoPerfilRef.putFile(File(foto!.path));
+      urlFoto = await fotoPerfilRef.getDownloadURL();
+      await user!.updatePhotoURL(urlFoto);
     } catch (e) {
       print(e);
       final sb_img = SnackBar(content: Text('No fue posible subir la imagen'));
@@ -123,13 +130,16 @@ class _PerfilScreenState extends State<PerfilScreen> {
   Widget fotoPerfil() {
     return Row(
       children: [
-        CircleAvatar(
-          radius: 50,
-          backgroundImage: foto == null
-              ? AssetImage('assets/images/user.png')
-              : FileImage(File(foto!.path)),
-          backgroundColor: Color.fromRGBO(50, 50, 50, 1),
-        ),
+        if (urlFoto != null)
+          CircleAvatar(
+            radius: 50,
+            backgroundImage: foto == null
+                ? AssetImage('assets/images/user.png')
+                : isEditing
+                ? FileImage(File(foto!.path))
+                : NetworkImage(urlFoto!),
+            backgroundColor: Color.fromRGBO(50, 50, 50, 1),
+          ),
         if (isEditing)
           Column(
             children: [
