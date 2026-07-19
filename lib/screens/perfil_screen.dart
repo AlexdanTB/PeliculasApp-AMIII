@@ -108,8 +108,19 @@ class _PerfilScreenState extends State<PerfilScreen> {
   }
 
   Future<void> abrirGaleria(Function actualizarFoto) async {
-    final picker = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final picker = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+    );
     actualizarFoto(picker);
+  }
+
+  Future<void> abrirCamara(Function actualizarFoto) async {
+    final capturado = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      imageQuality: 50,
+    );
+    actualizarFoto(capturado);
   }
 
   Future<void> actualizarFotoFire(String uid) async {
@@ -149,7 +160,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
           Column(
             children: [
               IconButton.outlined(
-                onPressed: () => {},
+                onPressed: () => abrirCamara(actualizarImgPicked),
                 icon: Icon(Icons.camera_alt),
               ),
               IconButton.outlined(
