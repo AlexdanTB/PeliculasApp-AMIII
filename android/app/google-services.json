@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "846275958727",
+    "firebase_url": "https://cinext-amiii-default-rtdb.firebaseio.com",
     "project_id": "cinext-amiii",
     "storage_bucket": "cinext-amiii.firebasestorage.app"
   },

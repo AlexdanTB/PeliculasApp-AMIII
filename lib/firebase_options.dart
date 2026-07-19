@@ -52,6 +52,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '846275958727',
     projectId: 'cinext-amiii',
     authDomain: 'cinext-amiii.firebaseapp.com',
+    databaseURL: 'https://cinext-amiii-default-rtdb.firebaseio.com',
     storageBucket: 'cinext-amiii.firebasestorage.app',
   );
 
@@ -60,6 +61,7 @@ class DefaultFirebaseOptions {
     appId: '1:846275958727:android:3686693cd736379a516be2',
     messagingSenderId: '846275958727',
     projectId: 'cinext-amiii',
+    databaseURL: 'https://cinext-amiii-default-rtdb.firebaseio.com',
     storageBucket: 'cinext-amiii.firebasestorage.app',
   );
 
@@ -69,6 +71,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '846275958727',
     projectId: 'cinext-amiii',
     authDomain: 'cinext-amiii.firebaseapp.com',
+    databaseURL: 'https://cinext-amiii-default-rtdb.firebaseio.com',
     storageBucket: 'cinext-amiii.firebasestorage.app',
   );
 }
