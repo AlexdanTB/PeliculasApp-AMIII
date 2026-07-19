@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:peliculas_app/widgets/fecha_picker.dart';
 
 class PerfilScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
   bool isLoading = false;
   bool isEditing = false;
   User? user = FirebaseAuth.instance.currentUser;
+  XFile? foto;
 
   @override
   void initState() {
@@ -89,6 +91,19 @@ class _PerfilScreenState extends State<PerfilScreen> {
     editar();
   }
 
+  //FOTO PERFIL//
+
+  void actualizarImgPicked(XFile nuevaFoto) {
+    setState(() {
+      foto = nuevaFoto;
+    });
+  }
+
+  Future<void> abrirGaleria(Function actualizarFoto) async {
+    final picker = ImagePicker().pickImage(source: ImageSource.gallery);
+    actualizarFoto(picker);
+  }
+
   Widget fotoPerfil() {
     return Row(
       children: [
@@ -105,7 +120,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                 icon: Icon(Icons.camera_alt),
               ),
               IconButton.outlined(
-                onPressed: () => {},
+                onPressed: () => abrirGaleria(actualizarImgPicked),
                 icon: Icon(Icons.photo_library_rounded),
               ),
             ],
