@@ -44,4 +44,9 @@ class _FechaPickerState extends State<FechaPicker> {
       });
     }
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

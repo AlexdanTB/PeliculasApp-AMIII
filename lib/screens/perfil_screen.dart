@@ -18,6 +18,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
   TextEditingController nickController = TextEditingController();
   bool isLoading = false;
   bool isEditing = false;
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -42,7 +43,6 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
   Future<void> _leerDatosUser() async {
     setState(() => isLoading = true);
-    User? user = FirebaseAuth.instance.currentUser;
     String userId = user!.uid;
     final ref = FirebaseDatabase.instance.ref();
     final snapshot = await ref.child('usuarios/$userId').get();
@@ -61,6 +61,33 @@ class _PerfilScreenState extends State<PerfilScreen> {
       isLoading = false;
       print('No data available. ${userId}');
     }
+  }
+
+  void actualizarDatos() {
+    String userId = user!.uid;
+    FirebaseDatabase.instance
+        .ref('usuarios/$userId/')
+        .set({
+          "correo": correoController.text,
+          "fecha_nacimiento": fechaController.text,
+          "nick": nickController.text,
+        })
+        .then((_) {
+          final sb_actualizado = SnackBar(
+            content: Text('¡Actualización Exitosa!'),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(sb_actualizado);
+        })
+        .catchError((error) {
+          final sb_error = SnackBar(
+            content: Text('No fue posible actualizar, inténtalo nuevamente'),
+          );
+          print(error);
+          print('usuarios/$user/');
+          ScaffoldMessenger.of(context).showSnackBar(sb_error);
+        });
+
+    editar();
   }
 
   Widget fotoPerfil() {
@@ -98,7 +125,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                     borderRadius: BorderRadiusGeometry.circular(4.0),
                   ),
                 ),
-                onPressed: () => {},
+                onPressed: () => actualizarDatos(),
                 icon: Icon(Icons.save_outlined),
                 label: Text('Actualizar'),
               ),
@@ -131,7 +158,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
       child: !isLoading
           ? Column(
               children: [
-                TextField(controller: correoController, enabled: isEditing),
+                TextField(controller: correoController, enabled: false),
                 FechaPicker(edadContoller, isEditing),
                 TextField(controller: nickController, enabled: isEditing),
               ],
@@ -157,5 +184,12 @@ class _PerfilScreenState extends State<PerfilScreen> {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    correoController.dispose();
+    nickController.dispose();
+    super.dispose();
   }
 }
