@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -96,11 +97,12 @@ class _PerfilScreenState extends State<PerfilScreen> {
   void actualizarImgPicked(XFile nuevaFoto) {
     setState(() {
       foto = nuevaFoto;
+      print('Foto actualizada: ${foto!.path}');
     });
   }
 
   Future<void> abrirGaleria(Function actualizarFoto) async {
-    final picker = ImagePicker().pickImage(source: ImageSource.gallery);
+    final picker = await ImagePicker().pickImage(source: ImageSource.gallery);
     actualizarFoto(picker);
   }
 
@@ -109,7 +111,9 @@ class _PerfilScreenState extends State<PerfilScreen> {
       children: [
         CircleAvatar(
           radius: 50,
-          backgroundImage: AssetImage('assets/images/user.png'),
+          backgroundImage: foto == null
+              ? AssetImage('assets/images/user.png')
+              : FileImage(File(foto!.path)),
           backgroundColor: Color.fromRGBO(50, 50, 50, 1),
         ),
         if (isEditing)
