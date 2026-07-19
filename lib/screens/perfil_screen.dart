@@ -30,11 +30,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
     return Scaffold(
       body: Column(
         children: [
-          CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage('assets/images/user.png'),
-            backgroundColor: Color.fromRGBO(50, 50, 50, 1),
-          ),
+          fotoPerfil(),
           Text('data'),
           controlesDatos(),
           formulario(),
@@ -65,6 +61,31 @@ class _PerfilScreenState extends State<PerfilScreen> {
       isLoading = false;
       print('No data available. ${userId}');
     }
+  }
+
+  Widget fotoPerfil() {
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 50,
+          backgroundImage: AssetImage('assets/images/user.png'),
+          backgroundColor: Color.fromRGBO(50, 50, 50, 1),
+        ),
+        if (isEditing)
+          Column(
+            children: [
+              IconButton.outlined(
+                onPressed: () => {},
+                icon: Icon(Icons.camera_alt),
+              ),
+              IconButton.outlined(
+                onPressed: () => {},
+                icon: Icon(Icons.photo_library_rounded),
+              ),
+            ],
+          ),
+      ],
+    );
   }
 
   Widget controlesDatos() {
@@ -121,6 +142,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
   void editar() {
     setState(() {
+      _leerDatosUser();
       isEditing = !isEditing;
     });
   }
