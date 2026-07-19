@@ -14,16 +14,33 @@ Future<void> main() async {
   runApp(const PeliculasApp());
 }
 
-class PeliculasApp extends StatelessWidget {
+class PeliculasApp extends StatefulWidget {
   const PeliculasApp({super.key});
+
+  @override
+  State<PeliculasApp> createState() => _PeliculasAppState();
+}
+
+class _PeliculasAppState extends State<PeliculasApp> {
+  bool modoOscuro = true;
+
+  void cambiarTema() {
+    setState(() {
+      modoOscuro = !modoOscuro;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        colorScheme: ColorScheme.dark(primary: Color.fromRGBO(243, 72, 112, 1)),
-      ),
+      theme: modoOscuro
+          ? ThemeData.dark().copyWith(
+              colorScheme: ColorScheme.dark(
+                primary: Color.fromRGBO(243, 72, 112, 1),
+              ),
+            )
+          : ThemeData.light(),
       initialRoute: "/login",
       routes: {
         "/login": (context) => LoginScreen(),

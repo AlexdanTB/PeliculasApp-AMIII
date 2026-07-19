@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas_app/screens/catalogo_screen.dart';
-import 'package:peliculas_app/screens/reproductor_screen.dart';
+import 'package:peliculas_app/screens/perfil_screen.dart';
 
 class Bottomnav extends StatefulWidget {
   const Bottomnav({super.key});
@@ -11,7 +11,7 @@ class Bottomnav extends StatefulWidget {
 
 class _BottomnavState extends State<Bottomnav> {
   int indice = 0;
-  List<Widget> ventanas = [CatalogoScreen(), ReproductorScreen(url_video: '')];
+  List<Widget> ventanas = [CatalogoScreen(), PerfilScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +30,7 @@ class _BottomnavState extends State<Bottomnav> {
             icon: Icon(Icons.local_movies),
             label: 'Catálogo',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.play_circle_fill_rounded),
-            label: 'Ver película',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
         ],
       ),
     );
