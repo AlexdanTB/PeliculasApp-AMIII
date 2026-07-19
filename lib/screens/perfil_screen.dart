@@ -14,6 +14,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
   TextEditingController correoController = TextEditingController();
   TextEditingController fechaController = TextEditingController();
   TextEditingController nickController = TextEditingController();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -39,6 +40,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
   }
 
   Future<void> _leerDatosUser() async {
+    setState(() => isLoading = true);
     User? user = FirebaseAuth.instance.currentUser;
     String userId = user!.uid;
     final ref = FirebaseDatabase.instance.ref();
@@ -47,27 +49,30 @@ class _PerfilScreenState extends State<PerfilScreen> {
       Map<dynamic, dynamic> usuarioData = Map<dynamic, dynamic>.from(
         snapshot.value as Map,
       );
-      print(usuarioData['correo']);
-
       setState(() {
         correoController.text = usuarioData['correo'];
         fechaController.text = usuarioData['fecha_nacimiento'];
         nickController.text = usuarioData['nick'];
+        isLoading = false;
       });
+      print(usuarioData);
     } else {
+      isLoading = false;
       print('No data available. ${userId}');
     }
   }
 
   Widget formulario() {
     return (Container(
-      child: Column(
-        children: [
-          TextField(controller: correoController),
-          TextField(controller: fechaController),
-          TextField(controller: nickController),
-        ],
-      ),
+      child: !isLoading
+          ? Column(
+              children: [
+                TextField(controller: correoController),
+                TextField(controller: fechaController),
+                TextField(controller: nickController),
+              ],
+            )
+          : CircularProgressIndicator(),
     ));
   }
 }
