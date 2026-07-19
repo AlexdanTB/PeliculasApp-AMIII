@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:peliculas_app/models/usuario.dart';
 
 class PerfilScreen extends StatefulWidget {
   const PerfilScreen({super.key});
@@ -12,11 +11,14 @@ class PerfilScreen extends StatefulWidget {
 
 class _PerfilScreenState extends State<PerfilScreen> {
   late Map dataUsuario;
+  TextEditingController correoController = TextEditingController();
+  TextEditingController fechaController = TextEditingController();
+  TextEditingController nickController = TextEditingController();
 
   @override
   void initState() {
-    leerDatosUser();
     super.initState();
+    _leerDatosUser();
   }
 
   @override
@@ -35,26 +37,37 @@ class _PerfilScreenState extends State<PerfilScreen> {
       ),
     );
   }
-}
 
-Future<void> leerDatosUser() async {
-  User? user = FirebaseAuth.instance.currentUser;
-  String userId = user!.uid;
-  final ref = FirebaseDatabase.instance.ref();
-  final snapshot = await ref.child('usuarios/$userId').get();
-  if (snapshot.exists) {
-    print(snapshot.value);
-    final map = snapshot.value as Map;
+  Future<void> _leerDatosUser() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    String userId = user!.uid;
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref.child('usuarios/$userId').get();
+    if (snapshot.exists && snapshot.value != null) {
+      Map<dynamic, dynamic> usuarioData = Map<dynamic, dynamic>.from(
+        snapshot.value as Map,
+      );
+      print(usuarioData['correo']);
 
-    Usuario usuario = Usuario.fromMap(snapshot.key!, map);
-    print('Usuario mapeado: ${usuario}');
-  } else {
-    print('No data available. ${userId}');
+      setState(() {
+        correoController.text = usuarioData['correo'];
+        fechaController.text = usuarioData['fecha_nacimiento'];
+        nickController.text = usuarioData['nick'];
+      });
+    } else {
+      print('No data available. ${userId}');
+    }
   }
-}
 
-Widget formulario() {
-  return (Container(
-    child: Column(children: [TextField(), TextField(), TextField()]),
-  ));
+  Widget formulario() {
+    return (Container(
+      child: Column(
+        children: [
+          TextField(controller: correoController),
+          TextField(controller: fechaController),
+          TextField(controller: nickController),
+        ],
+      ),
+    ));
+  }
 }
