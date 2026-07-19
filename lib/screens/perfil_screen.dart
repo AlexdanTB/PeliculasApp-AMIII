@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:peliculas_app/widgets/fecha_picker.dart';
@@ -104,6 +105,19 @@ class _PerfilScreenState extends State<PerfilScreen> {
   Future<void> abrirGaleria(Function actualizarFoto) async {
     final picker = await ImagePicker().pickImage(source: ImageSource.gallery);
     actualizarFoto(picker);
+  }
+
+  Future<void> actualizarFotoFire() async {
+    final storageRef = FirebaseStorage.instance.ref();
+    final fotoPerfilRef = storageRef.child("${user!.displayName}/avatar.jpg");
+
+    try {
+      await fotoPerfilRef.putFile(File(foto!.path));
+    } catch (e) {
+      print(e);
+      final sb_img = SnackBar(content: Text('No fue posible subir la imagen'));
+      ScaffoldMessenger.of(context).showSnackBar(sb_img);
+    }
   }
 
   Widget fotoPerfil() {
