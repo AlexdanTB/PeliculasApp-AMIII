@@ -36,10 +36,19 @@ class _PerfilScreenState extends State<PerfilScreen> {
       body: Column(
         children: [
           fotoPerfil(),
-          Text('data'),
           controlesDatos(),
           formulario(),
           modoTema(),
+          FilledButton.icon(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(6.0),
+              ),
+            ),
+            onPressed: () => logOut(),
+            label: Text('Cerrar Sesión'),
+            icon: Icon(Icons.logout),
+          ),
         ],
       ),
     );
@@ -242,6 +251,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
         ),
       ],
     );
+  }
+
+  Future<void> logOut() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
   }
 
   @override
