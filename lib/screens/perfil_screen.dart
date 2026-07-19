@@ -130,16 +130,21 @@ class _PerfilScreenState extends State<PerfilScreen> {
   Widget fotoPerfil() {
     return Row(
       children: [
-        if (urlFoto != null)
-          CircleAvatar(
-            radius: 50,
-            backgroundImage: foto == null
-                ? AssetImage('assets/images/user.png')
-                : isEditing
-                ? FileImage(File(foto!.path))
-                : NetworkImage(urlFoto!),
-            backgroundColor: Color.fromRGBO(50, 50, 50, 1),
-          ),
+        urlFoto != null
+            ? CircleAvatar(
+                radius: 50,
+                backgroundColor: Color.fromRGBO(50, 50, 50, 1),
+                backgroundImage: isEditing && foto != null
+                    ? FileImage(File(foto!.path))
+                    : NetworkImage(urlFoto!),
+              )
+            : CircleAvatar(
+                radius: 50,
+                backgroundColor: Color.fromRGBO(50, 50, 50, 1),
+                backgroundImage: foto == null
+                    ? AssetImage('assets/images/user.png')
+                    : FileImage(File(foto!.path)),
+              ),
         if (isEditing)
           Column(
             children: [
