@@ -34,6 +34,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
           ),
           Text('data'),
           formulario(),
+          modoTema(),
         ],
       ),
     );
@@ -74,5 +75,17 @@ class _PerfilScreenState extends State<PerfilScreen> {
             )
           : CircularProgressIndicator(),
     ));
+  }
+
+  Widget modoTema() {
+    return Row(
+      children: [
+        Text('Modo oscuro'),
+        IconButton.filled(
+          onPressed: () => {},
+          icon: Icon(Icons.dark_mode_sharp),
+        ),
+      ],
+    );
   }
 }
