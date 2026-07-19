@@ -15,6 +15,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
   TextEditingController fechaController = TextEditingController();
   TextEditingController nickController = TextEditingController();
   bool isLoading = false;
+  bool isEditing = false;
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
             backgroundColor: Color.fromRGBO(50, 50, 50, 1),
           ),
           Text('data'),
+          controlesDatos(),
           formulario(),
           modoTema(),
         ],
@@ -63,18 +65,62 @@ class _PerfilScreenState extends State<PerfilScreen> {
     }
   }
 
+  Widget controlesDatos() {
+    return isEditing
+        ? Row(
+            children: [
+              FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(4.0),
+                  ),
+                ),
+                onPressed: () => {},
+                icon: Icon(Icons.save_outlined),
+                label: Text('Actualizar'),
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(4.0),
+                  ),
+                ),
+                onPressed: () => editar(),
+                icon: Icon(Icons.cancel_outlined, size: 20),
+                label: Text('Cancelar', style: TextStyle(letterSpacing: 1)),
+              ),
+            ],
+          )
+        : ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(4.0),
+              ),
+            ),
+            onPressed: () => editar(),
+            icon: Icon(Icons.edit, size: 20),
+            label: Text('Editar perfil', style: TextStyle(letterSpacing: 1)),
+          );
+  }
+
   Widget formulario() {
     return (Container(
       child: !isLoading
           ? Column(
               children: [
-                TextField(controller: correoController),
-                TextField(controller: fechaController),
-                TextField(controller: nickController),
+                TextField(controller: correoController, enabled: isEditing),
+                TextField(controller: fechaController, enabled: isEditing),
+                TextField(controller: nickController, enabled: isEditing),
               ],
             )
           : CircularProgressIndicator(),
     ));
+  }
+
+  void editar() {
+    setState(() {
+      isEditing = !isEditing;
+    });
   }
 
   Widget modoTema() {
