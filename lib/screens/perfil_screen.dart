@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:peliculas_app/screens/registro_sceen.dart';
 import 'package:peliculas_app/widgets/fecha_picker.dart';
 
 class PerfilScreen extends StatefulWidget {
@@ -159,7 +158,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
           ? Column(
               children: [
                 TextField(controller: correoController, enabled: false),
-                FechaPicker(edadContoller, isEditing),
+                FechaPicker(fechaController, isEditing),
                 TextField(controller: nickController, enabled: isEditing),
               ],
             )
