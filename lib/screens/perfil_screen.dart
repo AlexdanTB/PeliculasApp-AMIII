@@ -33,23 +33,28 @@ class _PerfilScreenState extends State<PerfilScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          fotoPerfil(),
-          controlesDatos(),
-          formulario(),
-          modoTema(),
-          FilledButton.icon(
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusGeometry.circular(6.0),
+      body: Container(
+        margin: EdgeInsets.all(8),
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            fotoPerfil(),
+            controlesDatos(),
+            formulario(),
+            modoTema(),
+            FilledButton.icon(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadiusGeometry.circular(6.0),
+                ),
               ),
+              onPressed: () => logOut(),
+              label: Text('Cerrar Sesión'),
+              icon: Icon(Icons.logout),
             ),
-            onPressed: () => logOut(),
-            label: Text('Cerrar Sesión'),
-            icon: Icon(Icons.logout),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -148,43 +153,51 @@ class _PerfilScreenState extends State<PerfilScreen> {
   }
 
   Widget fotoPerfil() {
-    return Row(
-      children: [
-        urlFoto != null
-            ? CircleAvatar(
-                radius: 50,
-                backgroundColor: Color.fromRGBO(50, 50, 50, 1),
-                backgroundImage: isEditing && foto != null
-                    ? FileImage(File(foto!.path))
-                    : NetworkImage(urlFoto!),
-              )
-            : CircleAvatar(
-                radius: 50,
-                backgroundColor: Color.fromRGBO(50, 50, 50, 1),
-                backgroundImage: foto == null
-                    ? AssetImage('assets/images/user.png')
-                    : FileImage(File(foto!.path)),
-              ),
-        if (isEditing)
-          Column(
-            children: [
-              IconButton.outlined(
-                onPressed: () => abrirCamara(actualizarImgPicked),
-                icon: Icon(Icons.camera_alt),
-              ),
-              IconButton.outlined(
-                onPressed: () => abrirGaleria(actualizarImgPicked),
-                icon: Icon(Icons.photo_library_rounded),
-              ),
-            ],
-          ),
-      ],
+    return Container(
+      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          urlFoto != null
+              ? CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Color.fromRGBO(50, 50, 50, 1),
+                  backgroundImage: isEditing && foto != null
+                      ? FileImage(File(foto!.path))
+                      : NetworkImage(urlFoto!),
+                )
+              : CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Color.fromRGBO(50, 50, 50, 1),
+                  backgroundImage: foto == null
+                      ? AssetImage('assets/images/user.png')
+                      : FileImage(File(foto!.path)),
+                ),
+          if (isEditing)
+            Column(
+              children: [
+                IconButton.outlined(
+                  onPressed: () => abrirCamara(actualizarImgPicked),
+                  icon: Icon(Icons.camera_alt),
+                ),
+                IconButton.outlined(
+                  onPressed: () => abrirGaleria(actualizarImgPicked),
+                  icon: Icon(Icons.photo_library_rounded),
+                ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 
   Widget controlesDatos() {
     return isEditing
         ? Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FilledButton.icon(
                 style: FilledButton.styleFrom(
@@ -222,12 +235,20 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
   Widget formulario() {
     return (Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: !isLoading
           ? Column(
+              spacing: 5,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextField(controller: correoController, enabled: false),
+                TextField(
+                  controller: nickController,
+                  enabled: isEditing,
+                  decoration: InputDecoration(icon: Icon(Icons.person)),
+                ),
                 FechaPicker(fechaController, isEditing),
-                TextField(controller: nickController, enabled: isEditing),
               ],
             )
           : CircularProgressIndicator(),
@@ -242,14 +263,20 @@ class _PerfilScreenState extends State<PerfilScreen> {
   }
 
   Widget modoTema() {
-    return Row(
-      children: [
-        Text('Modo oscuro'),
-        IconButton.filled(
-          onPressed: () => {},
-          icon: Icon(Icons.dark_mode_sharp),
-        ),
-      ],
+    return Container(
+      margin: EdgeInsets.all(5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 5,
+        children: [
+          Text('Modo oscuro'),
+          IconButton.filledTonal(
+            onPressed: () => {},
+            icon: Icon(Icons.dark_mode_sharp, size: 20),
+          ),
+        ],
+      ),
     );
   }
 
