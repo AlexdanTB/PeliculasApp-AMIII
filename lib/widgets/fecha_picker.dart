@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class FechaPicker extends StatefulWidget {
   final TextEditingController fechaController;
-  const FechaPicker(this.fechaController, {super.key});
+  final bool isEditing;
+  const FechaPicker(this.fechaController, this.isEditing, {super.key});
 
   @override
   State<FechaPicker> createState() => _FechaPickerState();
@@ -14,6 +15,7 @@ class _FechaPickerState extends State<FechaPicker> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      enabled: widget.isEditing,
       readOnly: true,
       controller: widget.fechaController,
       decoration: InputDecoration(icon: Icon(Icons.date_range_rounded)),
