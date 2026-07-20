@@ -32,9 +32,12 @@ class _DetallePeliculaState extends State<DetallePelicula> {
             verT
                 ? ReproductorYt(widget.peliculadetail['trailer_url'])
                 : Image.network(widget.peliculadetail['imagen']),
+            valoracion(),
             Container(
               padding: EdgeInsets.all(5),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 5,
                 children: [
                   btnMirarAhora(context, widget.peliculadetail['video_url']),
@@ -60,59 +63,74 @@ class _DetallePeliculaState extends State<DetallePelicula> {
       ),
     );
   }
-}
 
-Widget btnMirarAhora(context, video) {
-  return FilledButton.icon(
-    style: FilledButton.styleFrom(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(4.0),
+  Widget valoracion() {
+    final val = widget.peliculadetail['valoracion'];
+    return Container(
+      child: Row(
+        children: [
+          Icon(Icons.star, size: 16, color: Color.fromRGBO(237, 235, 132, 1)),
+          Text(
+            val.toString().length < 2 ? '${val.toString()}.0' : val.toString(),
+            style: TextStyle(fontWeight: FontWeight(700)),
+          ),
+        ],
       ),
-    ),
-    onPressed: () => Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ReproductorScreen(url_video: video),
-      ),
-    ),
-    icon: Icon(Icons.play_arrow, size: 30),
-    label: Text('MIRAR AHORA', style: TextStyle(letterSpacing: 1)),
-  );
-}
+    );
+  }
 
-Widget btnVerTrailer(Function verTrailer) {
-  return ElevatedButton.icon(
-    style: ElevatedButton.styleFrom(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(4.0),
+  Widget btnMirarAhora(context, video) {
+    return FilledButton.icon(
+      style: FilledButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(4.0),
+        ),
       ),
-    ),
-    icon: Icon(Icons.play_circle_fill),
-    onPressed: () => verTrailer(),
-    label: Text('Ver Trailer'),
-  );
-}
+      onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ReproductorScreen(url_video: video),
+        ),
+      ),
+      icon: Icon(Icons.play_arrow, size: 30),
+      label: Text('MIRAR AHORA', style: TextStyle(letterSpacing: 1)),
+    );
+  }
 
-Widget generosL(List<dynamic> p) {
-  return Container(
-    height: 27,
-    padding: EdgeInsets.all(2),
-    child: ListView.separated(
-      separatorBuilder: (context, index) => SizedBox(width: 10),
-      scrollDirection: Axis.horizontal,
-      itemCount: p.length,
-      itemBuilder: (context, index) => Container(
-        padding: EdgeInsets.symmetric(horizontal: 7),
-        color: Color.fromRGBO(11, 0, 14, 1),
-        child: Text(
-          p[index].toString().toUpperCase(),
-          style: TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight(600),
-            letterSpacing: 0.5,
+  Widget btnVerTrailer(Function verTrailer) {
+    return ElevatedButton.icon(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(4.0),
+        ),
+      ),
+      icon: Icon(Icons.play_circle_fill),
+      onPressed: () => verTrailer(),
+      label: Text('Ver Trailer'),
+    );
+  }
+
+  Widget generosL(List<dynamic> p) {
+    return Container(
+      height: 27,
+      padding: EdgeInsets.all(2),
+      child: ListView.separated(
+        separatorBuilder: (context, index) => SizedBox(width: 10),
+        scrollDirection: Axis.horizontal,
+        itemCount: p.length,
+        itemBuilder: (context, index) => Container(
+          padding: EdgeInsets.symmetric(horizontal: 7),
+          color: Color.fromRGBO(11, 0, 14, 1),
+          child: Text(
+            p[index].toString().toUpperCase(),
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight(600),
+              letterSpacing: 0.5,
+            ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
