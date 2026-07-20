@@ -121,11 +121,24 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
     } on FirebaseAuthException catch (e) {
+      String msg = 'Credenciales incorrectas';
+      print('###ERROR: $e');
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
+        msg = 'Usuario no encontrado';
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
+        msg = 'Contraseña incorrecta';
       }
+      final sb_error = SnackBar(content: Text(msg));
+      ScaffoldMessenger.of(context).showSnackBar(sb_error);
     }
+  }
+
+  @override
+  void dispose() {
+    constrasenaC.dispose();
+    correoC.dispose();
+    super.dispose();
   }
 }
