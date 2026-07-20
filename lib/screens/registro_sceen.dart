@@ -23,6 +23,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
           children: [
             Image.asset('assets/images/logoicon0.png', height: 50),
             formulario(context),
+            btns(),
           ],
         ),
       ),
@@ -31,62 +32,134 @@ class _RegistroScreenState extends State<RegistroScreen> {
 
   Widget formulario(context) {
     return Column(
+      spacing: 15,
       children: [
         Text(
           'Crea tu cuenta',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
         ),
-        Text('Nombre de usuario'),
         TextField(
           controller: usuarioC,
           decoration: InputDecoration(
             label: Text('Escribe tu nick/usuario'),
-            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(75, 75, 75, 1),
+                width: 1.0,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(163, 16, 75, 1),
+                width: 1.0,
+              ),
+            ),
             icon: Icon(Icons.person_pin),
           ),
         ),
-        Text('Correo Electrónico'),
         TextField(
           controller: correoC,
           decoration: InputDecoration(
             label: Text('Ingresa tu correo electrónico'),
-            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(75, 75, 75, 1),
+                width: 1.0,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(163, 16, 75, 1),
+                width: 1.0,
+              ),
+            ),
             icon: Icon(Icons.mail),
           ),
         ),
-        Text('Fecha de nacimiento'),
         TextField(
           readOnly: true,
           controller: edadContoller,
-          decoration: InputDecoration(icon: Icon(Icons.date_range_rounded)),
+          decoration: InputDecoration(
+            label: Text('Selecciona tu fecha de nacimiento'),
+            icon: Icon(Icons.date_range_rounded),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(75, 75, 75, 1),
+                width: 1.0,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(163, 16, 75, 1),
+                width: 1.0,
+              ),
+            ),
+          ),
           keyboardType: TextInputType.datetime,
           onTap: () => _fechanacimiento(context),
         ),
-        Text('Contraseña'),
         TextField(
           controller: passC,
           decoration: InputDecoration(
             label: Text('Ingresa tu contraseña'),
-            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(75, 75, 75, 1),
+                width: 1.0,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(163, 16, 75, 1),
+                width: 1.0,
+              ),
+            ),
+            icon: Icon(Icons.lock),
           ),
         ),
         TextField(
           controller: passconfC,
           decoration: InputDecoration(
             label: Text('Confirma tu contraseña'),
-            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(75, 75, 75, 1),
+                width: 1.0,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(163, 16, 75, 1),
+                width: 1.0,
+              ),
+            ),
+            icon: Icon(Icons.lock_outline),
+            suffixIcon: IconButton(
+              onPressed: () => {},
+              icon: Icon(Icons.remove_red_eye),
+            ),
           ),
         ),
-        FilledButton.icon(
-          onPressed: () => registrar(context),
-          label: Text('Registrarme'),
-          icon: Icon(Icons.app_registration_rounded),
-        ),
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text('¿Ya tienes una cuenta? Inicia sesión ahora'),
-        ),
       ],
+    );
+  }
+
+  Widget btns() {
+    return Container(
+      padding: EdgeInsets.all(8),
+      child: Column(
+        children: [
+          FilledButton.icon(
+            onPressed: () => registrar(context),
+            label: Text('Registrarme'),
+            icon: Icon(Icons.app_registration_rounded),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('¿Ya tienes una cuenta? Inicia sesión ahora'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -110,70 +183,82 @@ class _RegistroScreenState extends State<RegistroScreen> {
       });
     }
   }
-}
 
-TextEditingController usuarioC = TextEditingController();
-TextEditingController correoC = TextEditingController();
-TextEditingController passC = TextEditingController();
-TextEditingController passconfC = TextEditingController();
-TextEditingController edadContoller = TextEditingController();
+  TextEditingController usuarioC = TextEditingController();
+  TextEditingController correoC = TextEditingController();
+  TextEditingController passC = TextEditingController();
+  TextEditingController passconfC = TextEditingController();
+  TextEditingController edadContoller = TextEditingController();
 
-Future<void> registrar(context) async {
-  String usuario = usuarioC.text;
-  String correo = correoC.text;
-  String contrasena = passC.text;
-  String contrasenac = passconfC.text;
+  Future<void> registrar(context) async {
+    String usuario = usuarioC.text;
+    String correo = correoC.text;
+    String contrasena = passC.text;
+    String contrasenac = passconfC.text;
 
-  if (usuario.isNotEmpty &&
-      correo.isNotEmpty &&
-      edadContoller.text.isNotEmpty &&
-      contrasena.isNotEmpty) {
-    if (contrasena == contrasenac) {
-      try {
-        final credential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-              email: correo,
-              password: contrasena,
-            );
+    if (usuario.isNotEmpty &&
+        correo.isNotEmpty &&
+        edadContoller.text.isNotEmpty &&
+        contrasena.isNotEmpty) {
+      if (contrasena == contrasenac) {
+        try {
+          final credential = await FirebaseAuth.instance
+              .createUserWithEmailAndPassword(
+                email: correo,
+                password: contrasena,
+              );
 
-        guardarDatosUser(usuario, correo, edadContoller.text);
+          guardarDatosUser(usuario, correo, edadContoller.text);
 
-        final registroExitoso = SnackBar(
-          content: Text('¡Registro Exitoso! Inicia sesión ahora'),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(registroExitoso);
-        Navigator.pop(context);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          print('The password provided is too weak.');
-        } else if (e.code == 'email-already-in-use') {
-          print('The account already exists for that email.');
+          final registroExitoso = SnackBar(
+            content: Text('¡Registro Exitoso! Inicia sesión ahora'),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(registroExitoso);
+          Navigator.pop(context);
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'weak-password') {
+            print('The password provided is too weak.');
+          } else if (e.code == 'email-already-in-use') {
+            print('The account already exists for that email.');
+          }
+        } catch (e) {
+          print(e);
         }
-      } catch (e) {
-        print(e);
+      } else {
+        final noCoincideSB = SnackBar(
+          content: Text('La contraseña no coincide'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(noCoincideSB);
       }
     } else {
-      final noCoincideSB = SnackBar(content: Text('La contraseña no coincide'));
-      ScaffoldMessenger.of(context).showSnackBar(noCoincideSB);
+      final datosIncompletos = SnackBar(
+        content: Text('Datos incompletos, llena todos los campos'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(datosIncompletos);
     }
-  } else {
-    final datosIncompletos = SnackBar(
-      content: Text('Datos incompletos, llena todos los campos'),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(datosIncompletos);
   }
-}
 
-Future<void> guardarDatosUser(usuario, correo, fechan) async {
-  User? user = FirebaseAuth.instance.currentUser;
-  if (user != null) {
-    String uid = user.uid;
-    DatabaseReference ref = FirebaseDatabase.instance.ref("usuarios/$uid");
+  Future<void> guardarDatosUser(usuario, correo, fechan) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String uid = user.uid;
+      DatabaseReference ref = FirebaseDatabase.instance.ref("usuarios/$uid");
 
-    await ref.set({
-      "nick": usuario,
-      "correo": correo,
-      "fecha_nacimiento": fechan,
-    });
+      await ref.set({
+        "nick": usuario,
+        "correo": correo,
+        "fecha_nacimiento": fechan,
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    usuarioC.dispose();
+    correoC.dispose();
+    passC.dispose();
+    passconfC.dispose();
+    edadContoller.dispose();
+    super.dispose();
   }
 }
