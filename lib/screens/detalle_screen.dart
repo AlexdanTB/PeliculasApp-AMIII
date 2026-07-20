@@ -32,7 +32,6 @@ class _DetallePeliculaState extends State<DetallePelicula> {
             verT
                 ? ReproductorYt(widget.peliculadetail['trailer_url'])
                 : Image.network(widget.peliculadetail['imagen']),
-            valoracion(),
             Container(
               padding: EdgeInsets.all(5),
               child: Row(
@@ -53,6 +52,7 @@ class _DetallePeliculaState extends State<DetallePelicula> {
                 letterSpacing: -0.5,
               ),
             ),
+            info1(),
             Text(
               widget.peliculadetail['descripcion'],
               style: TextStyle(fontSize: 13, fontWeight: FontWeight(300)),
@@ -64,10 +64,22 @@ class _DetallePeliculaState extends State<DetallePelicula> {
     );
   }
 
+  Widget info1() {
+    return Container(
+      margin: EdgeInsets.all(5),
+      child: Row(
+        spacing: 20,
+        children: [valoracion(), year(), clasificacion()],
+      ),
+    );
+  }
+
   Widget valoracion() {
     final val = widget.peliculadetail['valoracion'];
     return Container(
+      color: Color.fromRGBO(45, 30, 43, 1),
       child: Row(
+        spacing: 3,
         children: [
           Icon(Icons.star, size: 16, color: Color.fromRGBO(237, 235, 132, 1)),
           Text(
@@ -75,6 +87,32 @@ class _DetallePeliculaState extends State<DetallePelicula> {
             style: TextStyle(fontWeight: FontWeight(700)),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget year() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 7),
+      color: Color.fromRGBO(51, 45, 53, 1),
+      child: Text(
+        widget.peliculadetail['anio'].toString(),
+        style: TextStyle(fontWeight: FontWeight(700)),
+      ),
+    );
+  }
+
+  Widget clasificacion() {
+    final clasificacionE = widget.peliculadetail['clasificacion_edad'];
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 7),
+      color: Color.fromRGBO(11, 0, 14, 1),
+      child: Text(
+        clasificacionE > 0 ? '+${clasificacionE.toString()}' : 'G',
+        style: TextStyle(
+          fontWeight: FontWeight(700),
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
     );
   }
