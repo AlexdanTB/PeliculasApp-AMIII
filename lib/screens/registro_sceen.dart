@@ -11,6 +11,7 @@ class RegistroScreen extends StatefulWidget {
 
 class _RegistroScreenState extends State<RegistroScreen> {
   DateTime? _fecha;
+  bool mostrarPass = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +100,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
           onTap: () => _fechanacimiento(context),
         ),
         TextField(
+          obscureText: mostrarPass,
           controller: passC,
           decoration: InputDecoration(
             label: Text('Ingresa tu contraseña'),
@@ -118,6 +120,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
           ),
         ),
         TextField(
+          obscureText: mostrarPass,
           controller: passconfC,
           decoration: InputDecoration(
             label: Text('Confirma tu contraseña'),
@@ -135,8 +138,14 @@ class _RegistroScreenState extends State<RegistroScreen> {
             ),
             icon: Icon(Icons.lock_outline),
             suffixIcon: IconButton(
-              onPressed: () => {},
-              icon: Icon(Icons.remove_red_eye),
+              onPressed: () {
+                setState(() {
+                  mostrarPass = !mostrarPass;
+                });
+              },
+              icon: mostrarPass
+                  ? Icon(Icons.remove_red_eye)
+                  : Icon(Icons.visibility_off_rounded),
             ),
           ),
         ),
