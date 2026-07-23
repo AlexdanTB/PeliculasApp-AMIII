@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:peliculas_app/screens/reproductor_screen.dart';
 import 'package:peliculas_app/widgets/reproductor_yt.dart';
@@ -31,9 +32,10 @@ class _DetallePeliculaState extends State<DetallePelicula> {
           children: [
             verT
                 ? ReproductorYt(widget.peliculadetail['trailer_url'])
-                : Image.network(widget.peliculadetail['imagen']),
+                : poster(),
             Container(
               padding: EdgeInsets.all(5),
+              margin: EdgeInsets.all(5),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -53,14 +55,59 @@ class _DetallePeliculaState extends State<DetallePelicula> {
               ),
             ),
             info1(),
-            Text(
-              widget.peliculadetail['descripcion'],
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight(300)),
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                widget.peliculadetail['descripcion'],
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight(300)),
+              ),
             ),
             generosL(widget.peliculadetail['genero']),
           ],
         ),
       ),
+    );
+  }
+
+  Widget poster() {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Image.network(
+            widget.peliculadetail['imagen'],
+            fit: BoxFit.cover,
+          ),
+        ),
+        Positioned.fill(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
+            child: Container(color: Colors.transparent),
+          ),
+        ),
+        Positioned.fill(child: Container(color: Colors.black.withOpacity(0.5))),
+
+        Center(
+          child: Container(
+            height: 250,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black45,
+                  blurRadius: 20,
+                  offset: Offset(0, 10),
+                ),
+              ],
+            ),
+            child: ClipRect(
+              child: Image.network(
+                widget.peliculadetail['imagen'],
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
