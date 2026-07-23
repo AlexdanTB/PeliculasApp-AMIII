@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:peliculas_app/screens/reproductor_screen.dart';
 import 'package:peliculas_app/widgets/reproductor_yt.dart';
@@ -31,10 +32,13 @@ class _DetallePeliculaState extends State<DetallePelicula> {
           children: [
             verT
                 ? ReproductorYt(widget.peliculadetail['trailer_url'])
-                : Image.network(widget.peliculadetail['imagen']),
+                : poster(),
             Container(
               padding: EdgeInsets.all(5),
+              margin: EdgeInsets.all(5),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 5,
                 children: [
                   btnMirarAhora(context, widget.peliculadetail['video_url']),
@@ -50,9 +54,13 @@ class _DetallePeliculaState extends State<DetallePelicula> {
                 letterSpacing: -0.5,
               ),
             ),
-            Text(
-              widget.peliculadetail['descripcion'],
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight(300)),
+            info1(),
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                widget.peliculadetail['descripcion'],
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight(300)),
+              ),
             ),
             generosL(widget.peliculadetail['genero']),
           ],
@@ -60,59 +68,154 @@ class _DetallePeliculaState extends State<DetallePelicula> {
       ),
     );
   }
-}
 
-Widget btnMirarAhora(context, video) {
-  return FilledButton.icon(
-    style: FilledButton.styleFrom(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(4.0),
-      ),
-    ),
-    onPressed: () => Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ReproductorScreen(url_video: video),
-      ),
-    ),
-    icon: Icon(Icons.play_arrow, size: 30),
-    label: Text('MIRAR AHORA', style: TextStyle(letterSpacing: 1)),
-  );
-}
+  Widget poster() {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Image.network(
+            widget.peliculadetail['imagen'],
+            fit: BoxFit.cover,
+          ),
+        ),
+        Positioned.fill(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
+            child: Container(color: Colors.transparent),
+          ),
+        ),
+        Positioned.fill(child: Container(color: Colors.black.withOpacity(0.5))),
 
-Widget btnVerTrailer(Function verTrailer) {
-  return ElevatedButton.icon(
-    style: ElevatedButton.styleFrom(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(4.0),
-      ),
-    ),
-    icon: Icon(Icons.play_circle_fill),
-    onPressed: () => verTrailer(),
-    label: Text('Ver Trailer'),
-  );
-}
+        Center(
+          child: Container(
+            height: 250,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black45,
+                  blurRadius: 20,
+                  offset: Offset(0, 10),
+                ),
+              ],
+            ),
+            child: ClipRect(
+              child: Image.network(
+                widget.peliculadetail['imagen'],
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
-Widget generosL(List<dynamic> p) {
-  return Container(
-    height: 27,
-    padding: EdgeInsets.all(2),
-    child: ListView.separated(
-      separatorBuilder: (context, index) => SizedBox(width: 10),
-      scrollDirection: Axis.horizontal,
-      itemCount: p.length,
-      itemBuilder: (context, index) => Container(
-        padding: EdgeInsets.symmetric(horizontal: 7),
-        color: Color.fromRGBO(11, 0, 14, 1),
-        child: Text(
-          p[index].toString().toUpperCase(),
-          style: TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight(600),
-            letterSpacing: 0.5,
+  Widget info1() {
+    return Container(
+      margin: EdgeInsets.all(5),
+      child: Row(
+        spacing: 20,
+        children: [valoracion(), year(), clasificacion()],
+      ),
+    );
+  }
+
+  Widget valoracion() {
+    final val = widget.peliculadetail['valoracion'];
+    return Container(
+      color: Color.fromRGBO(45, 30, 43, 1),
+      child: Row(
+        spacing: 3,
+        children: [
+          Icon(Icons.star, size: 16, color: Color.fromRGBO(237, 235, 132, 1)),
+          Text(
+            val.toString().length < 2 ? '${val.toString()}.0' : val.toString(),
+            style: TextStyle(fontWeight: FontWeight(700)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget year() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 7),
+      color: Color.fromRGBO(51, 45, 53, 1),
+      child: Text(
+        widget.peliculadetail['anio'].toString(),
+        style: TextStyle(fontWeight: FontWeight(700)),
+      ),
+    );
+  }
+
+  Widget clasificacion() {
+    final clasificacionE = widget.peliculadetail['clasificacion_edad'];
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 7),
+      color: Color.fromRGBO(11, 0, 14, 1),
+      child: Text(
+        clasificacionE > 0 ? '+${clasificacionE.toString()}' : 'G',
+        style: TextStyle(
+          fontWeight: FontWeight(700),
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
+    );
+  }
+
+  Widget btnMirarAhora(context, video) {
+    return FilledButton.icon(
+      style: FilledButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(4.0),
+        ),
+      ),
+      onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ReproductorScreen(url_video: video),
+        ),
+      ),
+      icon: Icon(Icons.play_arrow, size: 30),
+      label: Text('MIRAR AHORA', style: TextStyle(letterSpacing: 1)),
+    );
+  }
+
+  Widget btnVerTrailer(Function verTrailer) {
+    return ElevatedButton.icon(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(4.0),
+        ),
+      ),
+      icon: Icon(Icons.play_circle_fill),
+      onPressed: () => verTrailer(),
+      label: Text('Ver Trailer'),
+    );
+  }
+
+  Widget generosL(List<dynamic> p) {
+    return Container(
+      height: 27,
+      padding: EdgeInsets.all(2),
+      child: ListView.separated(
+        separatorBuilder: (context, index) => SizedBox(width: 10),
+        scrollDirection: Axis.horizontal,
+        itemCount: p.length,
+        itemBuilder: (context, index) => Container(
+          padding: EdgeInsets.symmetric(horizontal: 7),
+          color: Color.fromRGBO(11, 0, 14, 1),
+          child: Text(
+            p[index].toString().toUpperCase(),
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight(600),
+              letterSpacing: 0.5,
+            ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

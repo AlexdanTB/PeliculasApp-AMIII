@@ -38,6 +38,7 @@ class _PeliculasAppState extends State<PeliculasApp> {
           ? ThemeData.dark().copyWith(
               colorScheme: ColorScheme.dark(
                 primary: Color.fromRGBO(243, 72, 112, 1),
+                secondary: Color.fromRGBO(250, 250, 250, 1),
               ),
             )
           : ThemeData.light(),
