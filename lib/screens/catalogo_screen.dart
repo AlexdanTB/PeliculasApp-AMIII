@@ -76,7 +76,7 @@ Widget listaPeliculas(BuildContext context) {
           },
         ));
       } else {
-        return (CircularProgressIndicator());
+        return Center(child: Container(child: (CircularProgressIndicator())));
       }
     },
   );
